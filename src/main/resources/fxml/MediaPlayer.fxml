@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.MediaView?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mediaplayer.controller.MediaController"
+            styleClass="root">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="topbar">
+            <Label text="Media Player" styleClass="app-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="searchField" promptText="Search playlist..." styleClass="search"/>
+            <Button text="Open File" onAction="#openFile"/>
+            <Button text="Open Folder" onAction="#openFolder"/>
+            <MenuButton text="☰">
+                <MenuItem text="Clear Playlist" onAction="#clearPlaylist"/>
+                <MenuItem text="Exit" onAction="#exitApplication"/>
+            </MenuButton>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12" styleClass="content">
+            <StackPane fx:id="displayArea" VBox.vgrow="ALWAYS" styleClass="display">
+                <MediaView fx:id="mediaView" preserveRatio="true" visible="false"/>
+                <VBox fx:id="audioView" alignment="CENTER" spacing="8" visible="false">
+                    <Label text="♫" styleClass="audio-icon"/>
+                    <Label fx:id="fileNameLabel" text="No media selected" styleClass="track-title"/>
+                    <Label fx:id="metadataLabel" text="" styleClass="metadata"/>
+                    <HBox fx:id="visualizer" alignment="BOTTOM_CENTER" spacing="5" prefHeight="80"/>
+                </VBox>
+                <Label fx:id="emptyLabel" text="Open a media file to begin" styleClass="empty-label"/>
+            </StackPane>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label fx:id="nowPlayingLabel" text="Nothing playing" styleClass="now-playing"/>
+                    <Label fx:id="timeLabel" text="00:00 / 00:00" styleClass="time-label"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="typeLabel" text="" styleClass="type-label"/>
+            </HBox>
+
+            <Slider fx:id="progressSlider" min="0" max="1"/>
+
+            <HBox alignment="CENTER" spacing="10">
+                <Button text="Back 10s" onAction="#seekBackward"/>
+                <Button text="Previous" onAction="#previous"/>
+                <Button fx:id="playButton" text="▶" onAction="#togglePlay" styleClass="play-button"/>
+                <Button text="Stop" onAction="#stop"/>
+                <Button text="Next" onAction="#next"/>
+                <Button text="Forward 10s" onAction="#seekForward"/>
+                <Button fx:id="muteButton" text="🔊" onAction="#toggleMute"/>
+                <Slider fx:id="volumeSlider" min="0" max="1" value="0.8" prefWidth="120"/>
+                <ToggleButton fx:id="shuffleButton" text="Shuffle" onAction="#toggleShuffle"/>
+                <Button fx:id="repeatButton" text="Repeat: Off" onAction="#cycleRepeat"/>
+                <Button text="Fullscreen" onAction="#fullscreen"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <right>
+        <VBox prefWidth="310" styleClass="playlist-panel">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="PLAYLIST" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="＋" onAction="#openFile"/>
+                <Button text="Clear" onAction="#clearPlaylist"/>
+            </HBox>
+            <ListView fx:id="playlistView" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="8">
+                <Button text="Remove" onAction="#removeSelected"/>
+                <Label fx:id="countLabel" text="0 items"/>
+            </HBox>
+        </VBox>
+    </right>
+</BorderPane>
